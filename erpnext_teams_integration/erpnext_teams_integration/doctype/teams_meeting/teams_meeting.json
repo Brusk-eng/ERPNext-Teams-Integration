@@ -15,6 +15,7 @@
   "start_time",
   "end_time",
   "location",
+  "conference_room_slot",
   "status",
   "section_break_rjte",
   "description",
@@ -93,8 +94,9 @@
   },
   {
    "fieldname": "location",
-   "fieldtype": "Data",
-   "label": "Location"
+   "fieldtype": "Select",
+   "label": "Location",
+   "options": "\nConference Room\nOnline\nOthers"
   },
   {
    "fieldname": "custom_outlook_event_id",
@@ -121,13 +123,20 @@
    "fieldtype": "Table",
    "label": "Recording URLs",
    "options": "Meeting Recordings"
+  },
+  {
+   "depends_on": "eval: doc.location == \"Conference Room\"",
+   "fieldname": "conference_room_slot",
+   "fieldtype": "Link",
+   "label": "Conference Room Slot",
+   "options": "Conference Booking"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2026-09-11 12:47:07.534032",
+ "modified": "2026-09-22 10:39:46.971090",
  "modified_by": "Administrator",
  "module": "Erpnext Teams Integration",
  "name": "Teams Meeting",
