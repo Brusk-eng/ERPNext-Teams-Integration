@@ -311,6 +311,24 @@ def _create_new_meeting(doc, doctype, docname, participant_emails, token):
 
         if not join_url:
             frappe.throw("Event created but no Teams link returned.")
+            
+        # --- AUTO-RECORDING MAGIC (Refactored) ---
+        try:
+            meeting_id = _extract_meeting_id_from_join_url(join_url, token)
+            if meeting_id:
+                patch_res = requests.patch(
+                    f"{GRAPH_API}/me/onlineMeetings/{meeting_id}",
+                    headers=_headers_with_auth(token),
+                    json={"recordAutomatically": True},
+                    timeout=15
+                )
+                if patch_res.status_code not in (200, 204):
+                    safe_log_error(f"Auto-record failed: {patch_res.text}", "Teams Meeting Config")
+            else:
+                safe_log_error("Meeting created, but ID not found for recording.", "Teams Auto-Record")
+        except Exception as e:
+            safe_log_error(f"Auto-record patch failed: {e}", "Teams Auto-Record")
+        # --- END AUTO-RECORDING MAGIC ---
 
         if frappe.db.has_column(doctype, 'custom_outlook_event_id'):
             doc.db_set("custom_outlook_event_id", data.get("id"))
