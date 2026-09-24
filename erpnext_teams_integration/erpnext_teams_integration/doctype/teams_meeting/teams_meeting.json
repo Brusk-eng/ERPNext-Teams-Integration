@@ -129,14 +129,15 @@
    "fieldname": "conference_room_slot",
    "fieldtype": "Link",
    "label": "Conference Room Slot",
-   "options": "Conference Booking"
+   "options": "Conference Booking",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2026-09-22 10:39:46.971090",
+ "modified": "2026-09-24 14:56:51.196488",
  "modified_by": "Administrator",
  "module": "Erpnext Teams Integration",
  "name": "Teams Meeting",

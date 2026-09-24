@@ -222,7 +222,7 @@ frappe.ui.form.on("Teams Meeting", {
                     callback: function(r) {
                         if (r.message) {
                             console.log(r);
-                            frappe.msgprint("Meeting recording fetched successfully. Please check the 'Meeting Recordings' table for the recording URLs.");
+                            frappe.msgprint(r.message);
                         } else if (r.message && r.message.login_url) {
                             window.location.href = r.message.login_url;
                         }
