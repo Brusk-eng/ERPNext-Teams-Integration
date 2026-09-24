@@ -66,7 +66,7 @@ class TeamsMeeting(Document):
         # Basic sanity check so we don't break the space-time continuum 
         if self.start_time and self.end_time:
             if get_time(self.start_time) >= get_time(self.end_time):
-                frappe.throw(_("End Time must be after Start Time. We haven't built a time machine yet!"))
+                frappe.throw(_("End Time must be after Start Time."))
 
     def add_participant(self, doctype, docname):
         """Add a single participant to meeting participants
