@@ -7,16 +7,20 @@
  "engine": "InnoDB",
  "field_order": [
   "meeting_title",
+  "section_break_dtgl",
+  "start_date",
+  "location",
+  "conference_room_slot",
+  "column_break_ongw",
+  "start_time",
+  "end_time",
+  "column_break_ziot",
+  "duration",
+  "status",
+  "section_break_nfwn",
   "custom_teams_meeting_url",
   "custom_join_teams_meeting",
   "custom_outlook_event_id",
-  "column_break_trft",
-  "start_date",
-  "start_time",
-  "end_time",
-  "location",
-  "conference_room_slot",
-  "status",
   "section_break_rjte",
   "description",
   "participates_section",
@@ -27,15 +31,11 @@
  "fields": [
   {
    "fieldname": "meeting_title",
-   "fieldtype": "Small Text",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Meeting Title",
    "reqd": 1
-  },
-  {
-   "fieldname": "column_break_trft",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "start_date",
@@ -57,7 +57,7 @@
    "fieldname": "end_time",
    "fieldtype": "Time",
    "label": "End Time",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "participates_section",
@@ -131,13 +131,34 @@
    "label": "Conference Room Slot",
    "options": "Conference Booking",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_dtgl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ongw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ziot",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_nfwn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Duration",
+   "label": "Duration"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2026-09-24 14:56:51.196488",
+ "modified": "2026-09-29 16:38:53.178399",
  "modified_by": "Administrator",
  "module": "Erpnext Teams Integration",
  "name": "Teams Meeting",

@@ -20,6 +20,13 @@ frappe.ui.form.on("Teams Meeting", {
                 }
             };
         });
+        // Auto-populate current user on new document creation
+        if (frm.is_new() && (!frm.doc.meeting_participants || frm.doc.meeting_participants.length === 0)) {
+            let row = frm.add_child("meeting_participants");
+            row.reference_doctype = "User";
+            row.reference_docname = frappe.session.user;
+            frm.refresh_field("meeting_participants");
+        }
     },
 
     refresh: function (frm) {
@@ -235,18 +242,18 @@ frappe.ui.form.on("Teams Meeting", {
             }, __("Teams"));
         }
     },
+});
 
-    start_time: function (frm) {
-        // End Time is auto-populated to 30 minutes after the Start Time if End Time is not set
-        if (frm.doc.start_time && !frm.doc.end_time) {
-            // Use moment.js to handle the time math safely
-            let new_time = moment(frm.doc.start_time, "HH:mm:ss")
-                .add(30, 'minutes')
-                .format("HH:mm:ss");
-            
-            frm.set_value("end_time", new_time);
+frappe.ui.form.on("Event Participants", {
+    meeting_participants_add: function (frm, cdt, cdn) {
+        // Event Participants is shared with Event, so only act on Teams Meeting
+        if (frm.doctype !== "Teams Meeting") return;
+
+        const row = locals[cdt][cdn];
+        if (!row.reference_doctype) {
+            frappe.model.set_value(cdt, cdn, "reference_doctype", "User");
         }
-    }
+    },
 });
 
 frappe.desk.meeting_participantsParticipants = class meetingParticipants {

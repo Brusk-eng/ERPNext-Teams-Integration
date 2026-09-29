@@ -5,9 +5,18 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.contacts.doctype.contact.contact import get_default_contact
-from frappe.utils import get_time
+from frappe.utils import get_time, getdate
+from datetime import datetime, timedelta
 
 class TeamsMeeting(Document):
+    def before_insert(self):
+        # Auto-populate the creator as a participant if the table is empty
+        if not self.get("meeting_participants"):
+            self.append("meeting_participants", {
+                "reference_doctype": "User",
+                "reference_docname": frappe.session.user
+            })
+            
     def after_insert(self):
         self.create_or_link_conference()
 
@@ -64,9 +73,11 @@ class TeamsMeeting(Document):
 
     def validate_times(self):
         # Basic sanity check so we don't break the space-time continuum 
-        if self.start_time and self.end_time:
-            if get_time(self.start_time) >= get_time(self.end_time):
-                frappe.throw(_("End Time must be after Start Time."))
+        if self.start_date and self.duration:
+            # Convert Frappe strings to native Python objects before combining
+            start_datetime = datetime.combine(getdate(self.start_date), get_time(self.start_time))
+            expected_end_datetime = start_datetime + timedelta(seconds=self.duration)
+            self.end_time = expected_end_datetime.time()
 
     def add_participant(self, doctype, docname):
         """Add a single participant to meeting participants
