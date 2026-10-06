@@ -186,8 +186,8 @@ class TeamsMeeting(Document):
                 if self.get("meeting_participants"):
                     for participant in self.meeting_participants:
                         booking.append("meeting_members", {
-                            "reference_document_type": participant.reference_doctype,
-                            "reference_name": participant.reference_docname,
+                            "reference_doctype": participant.reference_doctype,
+                            "reference_docname": participant.reference_docname,
                             "attending": participant.attending
                         })
 

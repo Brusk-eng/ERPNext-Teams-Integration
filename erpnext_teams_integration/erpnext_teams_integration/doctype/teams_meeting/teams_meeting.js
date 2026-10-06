@@ -256,28 +256,6 @@ frappe.ui.form.on("Event Participants", {
     },
 });
 
-frappe.desk.meeting_participantsParticipants = class meetingParticipants {
-    constructor(frm, doctype) {
-        this.frm = frm;
-        this.doctype = doctype;
-        this.make();
-    }
-
-    make() {
-        let me = this;
-        let table = me.frm.get_field("meeting_participants").grid; 
-        
-        new frappe.ui.form.LinkSelector({
-            doctype: me.doctype,
-            dynamic_link_field: "reference_doctype",
-            dynamic_link_reference: me.doctype,
-            fieldname: "reference_docname",
-            target: table,
-            txt: "",
-        });
-    }
-};
-
 frappe.ui.form.on("Meeting Recordings", {
     playdownload(frm, cdt, cdn) {
         let row = locals[cdt][cdn];
